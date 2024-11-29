@@ -1,7 +1,7 @@
-package com.example.demo.example.demo.service;
+package com.example.demo.service;
 
-import com.example.demo.example.demo.entity.Event;
-import com.example.demo.example.demo.repo.EventRepository;
+import com.example.demo.entity.Event;
+import com.example.demo.repo.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
