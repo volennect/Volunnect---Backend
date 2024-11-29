@@ -1,4 +1,4 @@
-package com.EventScheduling.Volunnect.Entity;
+package com.example.demo.example.demo.entity;
 
 import java.time.LocalTime;
 

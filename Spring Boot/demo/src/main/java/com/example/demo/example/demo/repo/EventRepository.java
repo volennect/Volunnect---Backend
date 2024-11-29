@@ -1,6 +1,6 @@
-package com.EventScheduling.Volunnect.Repository;
+package com.example.demo.example.demo.repo;
 
-import com.EventScheduling.Volunnect.Entity.Event;
+import com.example.demo.example.demo.entity.Event;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface EventRepository extends MongoRepository <Event, String> {

@@ -1,7 +1,7 @@
-package com.EventScheduling.Volunnect.Controller;
+package com.example.demo.example.demo.controller;
 
-import com.EventScheduling.Volunnect.Entity.Event;
-import com.EventScheduling.Volunnect.Service.EventService;
+import com.example.demo.example.demo.entity.Event;
+import com.example.demo.example.demo.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

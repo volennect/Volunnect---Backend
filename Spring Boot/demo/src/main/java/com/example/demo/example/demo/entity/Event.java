@@ -1,4 +1,4 @@
-package com.EventScheduling.Volunnect.Entity;
+package com.example.demo.example.demo.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
