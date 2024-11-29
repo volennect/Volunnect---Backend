@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class filterEventForUserController {
 
     @Autowired
     private UserRepo userRepo;

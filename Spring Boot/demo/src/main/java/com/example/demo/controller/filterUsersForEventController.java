@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/events")
-public class EventController {
+public class filterUsersForEventController {
 
     @Autowired
     private MongoTemplate mongoTemplate;
