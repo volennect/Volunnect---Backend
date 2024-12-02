@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Document(collection = "Events")
 public class FilterEvents {
     @Id
-    private String EventId;
+    private String eventId;
     private String EventName;
     private String EventType;
     private LocalDate eventStartDate;

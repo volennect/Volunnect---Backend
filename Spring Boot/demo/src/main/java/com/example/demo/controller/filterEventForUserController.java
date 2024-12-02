@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.FilterEvents;
 import com.example.demo.entity.FilterUsers;
-import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repo.filterUserRepo;
 import com.example.demo.service.filterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/filterEvents")
 public class filterEventForUserController {
 
     @Autowired
@@ -32,30 +31,16 @@ public class filterEventForUserController {
         return userService.save(filterUsers);
     }
 
-    @PutMapping("/{userId}")
-    FilterUsers updateUser(@RequestBody FilterUsers newUser, @PathVariable(name="id") String userID){
-        return filterUserRepo.findById(userID)
-                .map(users -> {
-                    users.setName(newUser.getName());
-                    users.setAge(newUser.getAge());
-                    users.setIntrests(newUser.getIntrests());
-                    users.setUnavailableDates(newUser.getUnavailableDates());
-                    return filterUserRepo.save(users);
-                }).orElseThrow(() -> new UserNotFoundException("User not found with given ID "+userID));
-    }
-
     @GetMapping
     public Iterable<FilterUsers> getusers(FilterUsers filterUsers){
         return userService.listAll(filterUsers);
     }
 
-    @GetMapping("/{userId}")
-    public FilterUsers getUserById(@PathVariable String userId){
-        return userService.getUserById(userId);
-    }
 
-    @GetMapping("/filterEvents/{id}")
-    public List<FilterEvents> filterEventsByUserInterestsAndAvailability(@PathVariable("id") String userId) {
+    //Filtering Events For the Volunteers based on their interested event types and availability of the volunteers is DONE.
+    // "PLZ NEVER EDIT THIS CODE AGAIN BECAUSE AFTER MILLIONS OF ATTEMPTS FINALLY ITS WORKING NOW."
+    @GetMapping("/{userId}")
+    public List<FilterEvents> filterEventsByUserInterestsAndAvailability(@PathVariable("userId") String userId) {
 
         List<String> interests = userService.getUserInterests(userId);
         List<LocalDate> unavailableDates = userService.getUnavailableDates(userId);
@@ -81,11 +66,8 @@ public class filterEventForUserController {
                                 .toArray(Criteria[]::new)
                 )
         );
-
         query.addCriteria(combinedCriteria);
-
         return mongoTemplate.find(query, FilterEvents.class);
-
     }
 }
 

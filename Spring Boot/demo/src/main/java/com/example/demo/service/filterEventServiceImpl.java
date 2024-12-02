@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.FilterEvents;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repo.FilterEventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,16 @@ public class filterEventServiceImpl implements filterEventService {
         return filterEventRepo.findAll();
     }
 
+
+    @Override
+    public FilterEvents getEventById(String EventId) {
+        return filterEventRepo.findById(EventId).orElseThrow(() -> new UserNotFoundException("Event not found"));
+    }
+
     @Override
     public String getEventType(String EventId) {
-        Optional<FilterEvents> event = filterEventRepo.findById(EventId);
-        if (event.isEmpty()) {
-            throw new IllegalArgumentException("Event not found for ID: " + EventId);
-        }
-        return event.get().getEventType();
+        FilterEvents event = getEventById(EventId);
+        return event.getEventType();
     }
 
     @Override

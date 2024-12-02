@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.FilterEvents;
 import com.example.demo.entity.FilterUsers;
 
 import java.time.LocalDate;
@@ -15,6 +16,4 @@ public interface filterUserService {
     List<String> getUserInterests(String userId);
 
     List<LocalDate> getUnavailableDates(String userId);
-
-    List<FilterUsers> getAllUsers();
 }

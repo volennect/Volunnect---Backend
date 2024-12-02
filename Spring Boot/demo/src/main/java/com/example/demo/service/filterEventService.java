@@ -10,6 +10,8 @@ public interface filterEventService {
 
     Iterable<FilterEvents> listAll(FilterEvents filterEvents);
 
+    FilterEvents getEventById(String EventId);
+
     String getEventType(String EventId);
 
     LocalDate getEventStartDate(String EventId);

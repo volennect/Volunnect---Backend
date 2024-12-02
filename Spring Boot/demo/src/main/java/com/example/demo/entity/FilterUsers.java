@@ -20,6 +20,7 @@ public class FilterUsers {
     private String userId;
     private String name;
     private String age;
-    private List<String> intrests;
+    private List<String> interests;
     private List<LocalDate> unavailableDates;
+    private Double ratings;
 }

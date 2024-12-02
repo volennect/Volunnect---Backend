@@ -33,18 +33,13 @@ public class filterUserServiceImpl implements filterUserService {
     @Override
     public List<String> getUserInterests(String userId) {
         FilterUsers user = getUserById(userId);
-        return user.getIntrests();
+        return user.getInterests();
     }
 
     @Override
     public List<LocalDate> getUnavailableDates(String userId) {
         FilterUsers user = getUserById(userId);
         return user.getUnavailableDates();
-    }
-
-    @Override
-    public List<FilterUsers> getAllUsers() {
-        return filterUserRepo.findAll();
     }
 
 }
