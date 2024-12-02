@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Events;
-import com.example.demo.entity.Users;
-import com.example.demo.repo.EventRepo;
-import com.example.demo.service.EventService;
+import com.example.demo.entity.FilterEvents;
+import com.example.demo.entity.FilterUsers;
+import com.example.demo.repo.FilterEventRepo;
+import com.example.demo.service.filterEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/events")
+@RequestMapping("/events")
 public class filterUsersForEventController {
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private EventService eventService;
+    private filterEventService filterEventService;
 
     @Autowired
-    private EventRepo eventRepo;
+    private FilterEventRepo filterEventRepo;
 
     @PostMapping("/save")
-    public String saveEvent(@RequestBody Events events){
-        return eventService.save(events);
+    public String saveEvent(@RequestBody FilterEvents filterEvents){
+        return filterEventService.save(filterEvents);
     }
 
     @GetMapping("/getall")
-    public Iterable<Events> getEvents(Events events){
-        return eventService.listAll(events);
+    public Iterable<FilterEvents> getEvents(FilterEvents filterEvents){
+        return filterEventService.listAll(filterEvents);
     }
 
     @GetMapping("/filterUsers/{EventId}")
-    public List<Users> filterUsersByEventType(@PathVariable("EventId") String EventId){
+    public List<FilterUsers> filterUsersByEventType(@PathVariable("EventId") String EventId){
 
-        String eventType = eventService.getEventType(EventId);
+        String eventType = filterEventService.getEventType(EventId);
 
         Query query = new Query();
-        query.addCriteria(Criteria.where("intrests").regex("^" + eventType + "$", "i"));
+        query.addCriteria(Criteria.where("interests").regex("^" + eventType + "$", "i"));
 
-        return mongoTemplate.find(query, Users.class);
+        return mongoTemplate.find(query, FilterUsers.class);
     }
 
 }

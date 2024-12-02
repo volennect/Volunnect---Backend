@@ -1,17 +1,17 @@
 package com.example.demo.controller;
 
-
-import com.example.demo.entity.Events;
-import com.example.demo.entity.Users;
+import com.example.demo.entity.FilterEvents;
+import com.example.demo.entity.FilterUsers;
 import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.repo.UserRepo;
-import com.example.demo.service.UserService;
+import com.example.demo.repo.filterUserRepo;
+import com.example.demo.service.filterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -19,53 +19,73 @@ import java.util.List;
 public class filterEventForUserController {
 
     @Autowired
-    private UserRepo userRepo;
+    private filterUserRepo filterUserRepo;
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private UserService userService;
+    private filterUserService userService;
 
     @PostMapping
-    public String saveUser(@RequestBody Users users){
-        return userService.save(users);
+    public String saveUser(@RequestBody FilterUsers filterUsers){
+        return userService.save(filterUsers);
     }
 
     @PutMapping("/{userId}")
-    Users updateUser(@RequestBody Users newUser,@PathVariable(name="id") String userID){
-        return userRepo.findById(userID)
+    FilterUsers updateUser(@RequestBody FilterUsers newUser, @PathVariable(name="id") String userID){
+        return filterUserRepo.findById(userID)
                 .map(users -> {
                     users.setName(newUser.getName());
                     users.setAge(newUser.getAge());
                     users.setIntrests(newUser.getIntrests());
-                    return userRepo.save(users);
+                    users.setUnavailableDates(newUser.getUnavailableDates());
+                    return filterUserRepo.save(users);
                 }).orElseThrow(() -> new UserNotFoundException("User not found with given ID "+userID));
     }
 
     @GetMapping
-    public Iterable<Users> getusers(Users users){
-        return userService.listAll(users);
+    public Iterable<FilterUsers> getusers(FilterUsers filterUsers){
+        return userService.listAll(filterUsers);
     }
 
     @GetMapping("/{userId}")
-    public Users getUserById(@PathVariable String userId){
+    public FilterUsers getUserById(@PathVariable String userId){
         return userService.getUserById(userId);
     }
 
     @GetMapping("/filterEvents/{id}")
-    public List<Events> filterEventsByUserInterests(@PathVariable("id") String userId) {
+    public List<FilterEvents> filterEventsByUserInterestsAndAvailability(@PathVariable("id") String userId) {
 
-        List<String> intrests = userService.getUserInterests(userId);
+        List<String> interests = userService.getUserInterests(userId);
+        List<LocalDate> unavailableDates = userService.getUnavailableDates(userId);
 
-        Query query = new Query();
-        Criteria[] criteria = new Criteria[intrests.size()];
-
-        for (int i = 0; i < intrests.size(); i++) {
-            criteria[i] = Criteria.where("EventType").regex(intrests.get(i), "i");
+        if (interests == null || interests.isEmpty()) {
+            return mongoTemplate.findAll(FilterEvents.class);
         }
 
-        query.addCriteria(new Criteria().orOperator(criteria));
-        return mongoTemplate.find(query, Events.class);
+        Query query = new Query();
+
+        Criteria combinedCriteria = new Criteria().andOperator(
+                new Criteria().orOperator(
+                        interests.stream()
+                                .map(interest -> Criteria.where("EventType").regex(interest, "i"))
+                                .toArray(Criteria[]::new)
+                ),
+                new Criteria().norOperator(
+                        unavailableDates.stream()
+                                .map(date -> new Criteria().andOperator(
+                                        Criteria.where("eventStartDate").lte(date),
+                                        Criteria.where("eventEndDate").gte(date)
+                                ))
+                                .toArray(Criteria[]::new)
+                )
+        );
+
+        query.addCriteria(combinedCriteria);
+
+        return mongoTemplate.find(query, FilterEvents.class);
+
     }
 }
+
