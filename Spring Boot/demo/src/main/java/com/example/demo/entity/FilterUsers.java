@@ -17,7 +17,7 @@ import java.util.List;
 @Document(collection = "Users")
 public class FilterUsers {
     @Id
-    private String userId;
+    private Long userId;
     private String name;
     private String age;
     private List<String> interests;

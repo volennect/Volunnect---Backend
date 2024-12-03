@@ -6,16 +6,14 @@ import java.time.LocalDate;
 
 public interface filterEventService {
 
-    String save(FilterEvents filterEvents);
+    Long save(FilterEvents filterEvents);
 
-    Iterable<FilterEvents> listAll(FilterEvents filterEvents);
+    FilterEvents getEventById(Long EventId);
 
-    FilterEvents getEventById(String EventId);
+    String getEventType(Long EventId);
 
-    String getEventType(String EventId);
+    LocalDate getEventStartDate(Long EventId);
 
-    LocalDate getEventStartDate(String EventId);
-
-    LocalDate getEventEndDate(String EventId);
+    LocalDate getEventEndDate(Long EventId);
 }
 

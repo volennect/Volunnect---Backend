@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.FilterEvents;
 import com.example.demo.entity.FilterUsers;
-import com.example.demo.repo.filterUserRepo;
 import com.example.demo.service.filterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,10 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/filterEvents")
+@CrossOrigin(origins = "*")
 public class filterEventForUserController {
-
-    @Autowired
-    private filterUserRepo filterUserRepo;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -27,21 +24,15 @@ public class filterEventForUserController {
     private filterUserService userService;
 
     @PostMapping
-    public String saveUser(@RequestBody FilterUsers filterUsers){
+    public Long saveUser(@RequestBody FilterUsers filterUsers){
         return userService.save(filterUsers);
-    }
-
-    @GetMapping
-    public Iterable<FilterUsers> getusers(FilterUsers filterUsers){
-        return userService.listAll(filterUsers);
     }
 
 
     //Filtering Events For the Volunteers based on their interested event types and availability of the volunteers is DONE.
     // "PLZ NEVER EDIT THIS CODE AGAIN BECAUSE AFTER MILLIONS OF ATTEMPTS FINALLY ITS WORKING NOW."
     @GetMapping("/{userId}")
-    public List<FilterEvents> filterEventsByUserInterestsAndAvailability(@PathVariable("userId") String userId) {
-
+    public List<FilterEvents> filterEventsByUserInterestsAndAvailability(@PathVariable("userId") Long userId) {
         List<String> interests = userService.getUserInterests(userId);
         List<LocalDate> unavailableDates = userService.getUnavailableDates(userId);
 
@@ -50,7 +41,6 @@ public class filterEventForUserController {
         }
 
         Query query = new Query();
-
         Criteria combinedCriteria = new Criteria().andOperator(
                 new Criteria().orOperator(
                         interests.stream()
@@ -69,5 +59,6 @@ public class filterEventForUserController {
         query.addCriteria(combinedCriteria);
         return mongoTemplate.find(query, FilterEvents.class);
     }
+
 }
 
