@@ -1,33 +1,50 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "events")
 public class Event {
+
     @Id
     private String id;
+
+    private byte[] image;
+
     private String title;
-    private LocalDate eventDate;
+
+    private LocalDate eventDate;  // Date only
+
     private String description;
+
     private String location;
+
     private String type;
+
     private String skills;
-    private Date reg_deadline;
+
+    @Field("registration_deadline")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDate registrationDeadline;  // Use LocalDateTime for date and time
+
     private List<Shift> shifts;
 
-    public Event(String id, String title, LocalDate eventDate, String description, String location, String type, String skills, Date reg_deadline, List<Shift> shifts) {
+    public Event(String id, byte[] image, String title, LocalDate eventDate, String description, String location, String type, String skills, LocalDate registrationDeadline, List<Shift> shifts) {
         this.id = id;
+        this.image = image;
         this.title = title;
         this.eventDate = eventDate;
         this.description = description;
         this.location = location;
         this.type = type;
         this.skills = skills;
-        this.reg_deadline = reg_deadline;
+        this.registrationDeadline = registrationDeadline;
         this.shifts = shifts;
     }
 
@@ -41,6 +58,14 @@ public class Event {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public String getTitle() {
@@ -91,12 +116,12 @@ public class Event {
         this.skills = skills;
     }
 
-    public Date getReg_deadline() {
-        return reg_deadline;
+    public LocalDate getRegistrationDeadline() {
+        return registrationDeadline;
     }
 
-    public void setReg_deadline(Date reg_deadline) {
-        this.reg_deadline = reg_deadline;
+    public void setRegistrationDeadline(LocalDate registrationDeadline) {
+        this.registrationDeadline = registrationDeadline;
     }
 
     public List<Shift> getShifts() {
@@ -111,13 +136,14 @@ public class Event {
     public String toString() {
         return "Event{" +
                 "id='" + id + '\'' +
+                ", image=" + image.length + " bytes" +  // Print the image byte length instead of the actual bytes
                 ", title='" + title + '\'' +
                 ", eventDate=" + eventDate +
                 ", description='" + description + '\'' +
                 ", location='" + location + '\'' +
                 ", type='" + type + '\'' +
                 ", skills='" + skills + '\'' +
-                ", reg_deadline=" + reg_deadline +
+                ", registrationDeadline=" + registrationDeadline +
                 ", shifts=" + shifts +
                 '}';
     }

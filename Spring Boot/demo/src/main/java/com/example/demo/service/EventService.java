@@ -14,8 +14,8 @@ public class EventService {
     private EventRepository repository;
 
     // Save or update an event
-    public void saveOrUpdate(Event event) {
-        repository.save(event);
+    public Event saveOrUpdate(Event event) {
+        return repository.save(event);
     }
 
     // List all events
@@ -25,11 +25,10 @@ public class EventService {
 
     // Delete an event by ID
     public void deleteEvent(String id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
+        if (!repository.existsById(id)) {
             throw new IllegalArgumentException("Event with ID " + id + " does not exist.");
         }
+        repository.deleteById(id);
     }
 
     // Get an event by ID
