@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VolunteerRepository extends MongoRepository<Volunteer, String> {
-    // MongoRepository provides CRUD operations out of the box
 }

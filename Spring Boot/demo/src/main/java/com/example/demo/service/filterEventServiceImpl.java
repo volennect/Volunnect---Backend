@@ -16,36 +16,31 @@ public class filterEventServiceImpl implements filterEventService {
     private FilterEventRepo filterEventRepo;
 
     @Override
-    public String save(FilterEvents filterEvents) {
+    public Long save(FilterEvents filterEvents) {
         return filterEventRepo.save(filterEvents).getEventId();
     }
 
-    @Override
-    public Iterable<FilterEvents> listAll(FilterEvents filterEvents) {
-        return filterEventRepo.findAll();
-    }
-
 
     @Override
-    public FilterEvents getEventById(String EventId) {
-        return filterEventRepo.findById(EventId).orElseThrow(() -> new UserNotFoundException("Event not found"));
+    public FilterEvents getEventById(Long eventId) {
+        return filterEventRepo.findById(eventId).orElseThrow(() -> new UserNotFoundException("Event not found"));
     }
 
     @Override
-    public String getEventType(String EventId) {
-        FilterEvents event = getEventById(EventId);
+    public String getEventType(Long eventId) {
+        FilterEvents event = getEventById(eventId);
         return event.getEventType();
     }
 
     @Override
-    public LocalDate getEventStartDate(String EventId){
-        Optional<FilterEvents> eventStartDate = filterEventRepo.findById(EventId);
+    public LocalDate getEventStartDate(Long eventId){
+        Optional<FilterEvents> eventStartDate = filterEventRepo.findById(eventId);
         return eventStartDate.get().getEventStartDate();
     }
 
     @Override
-    public LocalDate getEventEndDate(String EventId){
-        Optional<FilterEvents> eventEndDate = filterEventRepo.findById(EventId);
+    public LocalDate getEventEndDate(Long eventId){
+        Optional<FilterEvents> eventEndDate = filterEventRepo.findById(eventId);
         return eventEndDate.get().getEventEndDate();
     }
 }
