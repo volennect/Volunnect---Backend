@@ -1,4 +1,4 @@
-package com.example.demo.serviceimpl;
+/*package com.example.demo.serviceimpl;
 
 import com.example.demo.entity.Volunteer;
 import com.example.demo.repo.VolunteerRepository;
@@ -43,8 +43,8 @@ public class VolunteerServiceImpl implements VolunteerService {
             if (updatedVolunteer.getPhone() != null) volunteer.setPhone(updatedVolunteer.getPhone());
             if (updatedVolunteer.getAddress() != null) volunteer.setAddress(updatedVolunteer.getAddress());
             if (updatedVolunteer.getDateOfBirth() != null) volunteer.setDateOfBirth(updatedVolunteer.getDateOfBirth());
-            if (updatedVolunteer.getSkills() != null) volunteer.setSkills(updatedVolunteer.getSkills());
-            if (updatedVolunteer.getAvailability() != null) volunteer.setAvailability(updatedVolunteer.getAvailability());
+            if (updatedVolunteer.getInterests() != null) volunteer.setInterests(updatedVolunteer.getInterests());
+            if (updatedVolunteer.getUnavailableDates() != null) volunteer.setUnavailableDates(updatedVolunteer.getUnavailableDates());
 
             return volunteerRepository.save(volunteer);
         }
@@ -61,3 +61,4 @@ public class VolunteerServiceImpl implements VolunteerService {
         return false;
     }
 }
+*/
