@@ -16,28 +16,23 @@ public class filterUserServiceImpl implements filterUserService {
     private filterUserRepo filterUserRepo;
 
     @Override
-    public String save(FilterUsers filterUsers) {
+    public Long save(FilterUsers filterUsers) {
         return filterUserRepo.save(filterUsers).getUserId();
     }
 
     @Override
-    public List<FilterUsers> listAll(FilterUsers filterUsers) {
-        return filterUserRepo.findAll();
-    }
-
-    @Override
-    public FilterUsers getUserById(String userId) {
+    public FilterUsers getUserById(Long userId) {
         return filterUserRepo.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
-    public List<String> getUserInterests(String userId) {
+    public List<String> getUserInterests(Long userId) {
         FilterUsers user = getUserById(userId);
         return user.getInterests();
     }
 
     @Override
-    public List<LocalDate> getUnavailableDates(String userId) {
+    public List<LocalDate> getUnavailableDates(Long userId) {
         FilterUsers user = getUserById(userId);
         return user.getUnavailableDates();
     }

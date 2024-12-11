@@ -1,11 +1,11 @@
-package com.example.demo.serviceimpl;
+package com.example.demo.service;
 
 import com.example.demo.entity.Volunteer;
 import com.example.demo.repo.VolunteerRepository;
-import com.example.demo.service.VolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,15 +43,14 @@ public class VolunteerServiceImpl implements VolunteerService {
             if (updatedVolunteer.getPhone() != null) volunteer.setPhone(updatedVolunteer.getPhone());
             if (updatedVolunteer.getAddress() != null) volunteer.setAddress(updatedVolunteer.getAddress());
             if (updatedVolunteer.getDateOfBirth() != null) volunteer.setDateOfBirth(updatedVolunteer.getDateOfBirth());
-            if (updatedVolunteer.getSkills() != null) volunteer.setSkills(updatedVolunteer.getSkills());
-            if (updatedVolunteer.getAvailability() != null) volunteer.setAvailability(updatedVolunteer.getAvailability());
+            if (updatedVolunteer.getInterests() != null) volunteer.setInterests(updatedVolunteer.getInterests());
+            if (updatedVolunteer.getUnavailableDates() != null) volunteer.setUnavailableDates(updatedVolunteer.getUnavailableDates());
 
             return volunteerRepository.save(volunteer);
         }
 
         return null;
     }
-
     @Override
     public boolean deleteVolunteer(String id) {
         if (volunteerRepository.existsById(id)) {
@@ -59,5 +58,18 @@ public class VolunteerServiceImpl implements VolunteerService {
             return true;
         }
         return false;
+    }
+
+    //for Advanced filtering function
+    @Override
+    public List<String> getVolunteerInterests(String id){
+        Volunteer volunteer = getVolunteerById(id);
+        return volunteer.getInterests();
+    }
+
+    @Override
+    public List<LocalDate> getUnavailableDates(String id){
+        Volunteer volunteer = getVolunteerById(id);
+        return volunteer.getUnavailableDates();
     }
 }

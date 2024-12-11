@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FilterEventRepo extends MongoRepository<FilterEvents, String> {
-    Optional<FilterEvents> findById(String EventId);
+public interface FilterEventRepo extends MongoRepository<FilterEvents, Long> {
+    Optional<FilterEvents> findById(Long EventId);
 }
 
