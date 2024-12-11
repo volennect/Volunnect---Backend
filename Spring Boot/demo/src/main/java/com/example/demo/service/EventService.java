@@ -1,44 +1,22 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Event;
-import com.example.demo.repo.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.time.LocalDate;
 
-@Service
-public class EventService {
+public interface EventService {
 
-    @Autowired
-    private EventRepository repository;
+    Event saveOrUpdate(Event event);
 
-    // Save or update an event
-    public void saveOrUpdate(Event event) {
-        repository.save(event);
-    }
+    Iterable<Event> listAll();
 
-    // List all events
-    public Iterable<Event> listAll() {
-        return repository.findAll();
-    }
+    String deleteEvent(String id);
 
-    // Delete an event by ID
-    public void deleteEvent(String id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new IllegalArgumentException("Event with ID " + id + " does not exist.");
-        }
-    }
+    Event getEventById(String eventId);
 
-    // Get an event by ID
-    public Event getEventById(String eventId) {
-        Optional<Event> event = repository.findById(eventId);
-        if (event.isPresent()) {
-            return event.get();
-        } else {
-            throw new IllegalArgumentException("Event with ID " + eventId + " not found.");
-        }
-    }
+    String getEventType(String id);
+
+    LocalDate getEventStartDate(String id);
+
+    LocalDate getEventEndDate(String id);
 }
