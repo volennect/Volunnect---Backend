@@ -5,6 +5,9 @@ import com.example.chatapp.cht_Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -17,7 +20,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUserByName(String name) {
-        return userRepository.findByName(name);
+    public Optional<User> getUserById(String id) {
+        return userRepository.findById(id);
+    }
+
+    // Add this method to fetch all users
+    public List<User> getAllUsers() {
+        return userRepository.findAll(); // This assumes `UserRepository` extends MongoRepository or JpaRepository
     }
 }

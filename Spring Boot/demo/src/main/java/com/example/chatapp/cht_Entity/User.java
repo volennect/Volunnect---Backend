@@ -13,6 +13,14 @@ public class User {
     private String name;
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    // Default constructor (required by MongoDB)
+    public User() {}
+
+    // Constructor
+    public User(String name) {
+        this.name = name;
+    }
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -38,4 +46,3 @@ public class User {
         this.createdAt = createdAt;
     }
 }
-

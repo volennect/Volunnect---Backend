@@ -25,4 +25,16 @@ public class GroupController {
     public Group getGroup(@PathVariable String groupId) {
         return groupService.getGroupById(groupId);
     }
+
+    // Add a member to a group
+    @PutMapping("/{groupId}/addMember")
+    public Group addMember(@PathVariable String groupId, @RequestParam String member) {
+        return groupService.addMemberToGroup(groupId, member);
+    }
+
+    // Get all groups
+    @GetMapping
+    public List<Group> getAllGroups() {
+        return groupService.getAllGroups();
+    }
 }

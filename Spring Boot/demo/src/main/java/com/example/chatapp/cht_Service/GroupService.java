@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -22,5 +23,21 @@ public class GroupService {
     // Fetch a group by its ID
     public Group getGroupById(String groupId) {
         return groupRepository.findById(groupId).orElse(null);
+    }
+
+    // Add a member to a group
+    public Group addMemberToGroup(String groupId, String member) {
+        Optional<Group> optionalGroup = groupRepository.findById(groupId);
+        if (optionalGroup.isPresent()) {
+            Group group = optionalGroup.get();
+            group.getMembers().add(member);
+            return groupRepository.save(group);
+        }
+        return null;
+    }
+
+    // Get all groups
+    public List<Group> getAllGroups() {
+        return groupRepository.findAll();
     }
 }
