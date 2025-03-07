@@ -18,9 +18,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2tyc81cMU4Bi50atLzID8XAUCLV" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -29,7 +29,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "chanaka",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/GitHUb Repositories/Volunnect---Backend",
@@ -64,6 +64,7 @@
       <option name="presentableId" value="Default" />
       <updated>1741327591846</updated>
       <workItem from="1741327592931" duration="235000" />
+      <workItem from="1741335007343" duration="309000" />
     </task>
     <servers />
   </component>
